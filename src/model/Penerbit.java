@@ -4,6 +4,10 @@ public class Penerbit {
     private int id;
     private String penerbit;
 
+    public Penerbit() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     public int getId() {
         return id;
     }

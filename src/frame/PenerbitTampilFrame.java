@@ -4,6 +4,7 @@ import db.Koneksi;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -119,7 +121,84 @@ public void setListener(){
           dispose();
         }
     });
+    
+    bCari.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            resetTable(" WHERE Penerbit like '%"+eCari.getText()+"%'");
+        }
+    });
+    
+    bBatal.addActionListener(new ActionListener() {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            resetTable("");
+        }
+    });
+    
+    bHapus.addActionListener (new ActionListener() {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            int i;
+            i = tPenerbit.getSelectedRow();
+            int pilihan = JOptionPane.showConfirmDialog(
+                    null, 
+                    "Yakin mau hapus ?",
+                    "Konfirmasi hapus ",
+                    JOptionPane.YES_NO_CANCEL_OPTION);
+            
+            if (pilihan==0){
+                if(i>=0){
+                try {
+                    TableModel model = tPenerbit.getModel();
+                    Koneksi koneksi = new Koneksi();
+                    Connection con = koneksi.getConnection();
+                    String executeQuery = "delete from penerbit where id =?";
+                    PreparedStatement ps = con.prepareStatement (executeQuery);
+                    ps.setString(1, model.getValueAt(i, 0).toString());
+                    ps.executeUpdate();
+                }   catch (SQLException ex ){
+                    System.err.println(ex);
+                }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Pilih data yang ingin dihapus");
+                }
+            }
+            resetTable("");
+        }
+    });
+    
+    bUbah.addActionListener(new ActionListener(){
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            int i = tPenerbit.getSelectedRow();
+            if(i>=0){
+                TableModel model = tPenerbit.getModel();
+                penerbit = new Penerbit();
+                penerbit.setId(Integer.parseInt(model.getValueAt(i, 0).toString()));
+                penerbit.setPenerbit(model.getValueAt(i, 1).toString());
+                PenerbitTambahFrame penerbitTambahFrame = new PenerbitTambahFrame(penerbit);
+            }else{
+                JOptionPane.showMessageDialog(null, "Pilih data yang ingin diubah");
+            }
+        }
+    });
+    
+    bTambah.addActionListener (new ActionListener(){
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+           PenerbitTambahFrame penerbitTambahFrame = new PenerbitTambahFrame(); 
+        }
+    });
+    
+    addWindowListener (new java.awt.event.WindowAdapter(){
+        public void windowActivated(java.awt.event.WindowEvent evt){
+            resetTable("");
+        }
+    });   
 }
-
-
 }
