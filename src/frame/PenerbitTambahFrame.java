@@ -90,7 +90,7 @@ public PenerbitTambahFrame (Penerbit penerbit) {
                 ps = con.prepareStatement(executeQuery);
                 ps.setString(1, ePenerbit.getText());
               }else{
-                String executeQuery = "update penerbit set penerbit=? where id-?";
+                String executeQuery = "update penerbit set penerbit=? where id=?";
                 ps = con.prepareStatement(executeQuery);
                 ps.setString(1, ePenerbit.getText());
                 ps.setString(2, eId.getText());

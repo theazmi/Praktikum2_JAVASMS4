@@ -5,7 +5,7 @@ public class Penerbit {
     private String penerbit;
 
     public Penerbit() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+         
     }
 
     public int getId() {
