@@ -1,8 +1,11 @@
 package frame;
 
-import com.mysql.jdbc.PreparedStatement;
+import db.Koneksi;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import javax.swing.JButton;
+import model.Petugas;
 
 public class PetugasTambahFrame extends javax.swing.JFrame {
 
@@ -23,15 +26,14 @@ public class PetugasTambahFrame extends javax.swing.JFrame {
         status = SEDANG_UBAH;
         setLocationRelativeTo(null);
         eId.setText (String.valueOf(petugas.getId()));
-        eNamapetugas.setText(petugas.getNamapetugas());
+        eNamapetugas.setText(petugas.getNamaPetugas());
         eUsername.setText(petugas.getUsername());
         ePassword.setText(petugas.getPassword());
         eNamapetugas.requestFocus();
     }
 
-    PetugasTambahFrame(model.Petugas petugas) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+   
+    
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -143,12 +145,12 @@ public class PetugasTambahFrame extends javax.swing.JFrame {
     private void bSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bSimpanActionPerformed
         try {
             Koneksi koneksi = new Koneksi();
-            Conncection con = koneksi.getConncection();
+            Connection con = koneksi.getConnection();
             PreparedStatement ps;
             if (status==SEDANG_TAMBAH){
                 String executeQuery = "insert into petugas "
-                        + "nama_petugas=?, username=?, password=? where id=?";
-                ps = con.prepareStatement (executeQuery);
+                        + "(nama_petugas,username,password) values (?,?,?)";
+                ps = con.prepareStatement(executeQuery);
                 ps.setString (1, eNamapetugas.getText());
                 ps.setString (2, eUsername.getText());
                 ps.setString (3, ePassword.getText());
@@ -216,47 +218,7 @@ public class PetugasTambahFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     // End of variables declaration//GEN-END:variables
 
-    private static class Petugas {
-
-        public Petugas() {
-        }
-
-        private Object getId() {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-
-        private String getNamapetugas() {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-
-        private String getUsername() {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-
-        private String getPassword() {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-    }
-
-    private static class Koneksi {
-
-        public Koneksi() {
-        }
-
-        private Conncection getConncection() {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-    }
-
-    private static class Conncection {
-
-        public Conncection() {
-        }
-
-        private PreparedStatement prepareStatement(String executeQuery) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-    }
+    
 
   
     
