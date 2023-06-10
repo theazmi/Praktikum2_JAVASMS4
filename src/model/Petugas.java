@@ -47,5 +47,9 @@ public class Petugas {
     public Petugas() {
     }
     
+    public Petugas (int id,String namaPetugas){
+        this.id = id;
+        this.namaPetugas = namaPetugas;
+    }
     
 }
